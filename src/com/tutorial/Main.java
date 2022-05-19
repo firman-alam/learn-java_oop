@@ -1,49 +1,55 @@
 package com.tutorial;
 
-
-// class tanpa constructor
-class Polos {
-    String dataString;
-    int dataInt;
-}
-
-// class denaan constructor
 class Mahasiswa {
+
+    // Data member
     String nama;
-    String NIM;
-    String jurusan;
-
-    // constructor, dipanggil pertama kali saat object dibuat
-    // Mahasiswa() {
-    //     System.out.println("Ini adalah konstruktor");
-    // }
-
-    // constructor dengan parameter
-    Mahasiswa(String inputNama, String inputNIM, String inputJurusan) {
-        nama = inputNama;
-        NIM = inputNIM;
-        jurusan = inputJurusan;
-
-        System.out.println(nama);
-        System.out.println(NIM);
-        System.out.println(jurusan);
+    String nim;
+    
+    // constructor 
+    Mahasiswa(String nama, String nim) { // => ini punya scope void main
+        this.nama = nama;   // this.nama artinya ini punyanya class mahasiswa
+        this.nim = nim;     // this.nim artinya ini punya class mahasiswa
     }
+
+    // method tanpa return dan tanpa parameter
+    void show() {
+        System.out.println("Nama: " + this.nama + " " + "NIM: " + this.nim);
+    }
+
+    // method tanpa return dan dengan parameter
+    void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    // method dengan return tapi tidak dengan parameter
+    String getNama() {
+        return this.nama;
+    }
+
+    String getNIM() {
+        return this.nim;
+    }
+
+    // method dengan return dan dengan parameter
+    String sayHi(String message) {
+        return message + " juga, nama saya adalah " + this.nama;
+    }
+
 }
 
-public class Main{
+public class Main {
+    public static void main(String[] args) {
+        Mahasiswa mahasiswa = new Mahasiswa("Fara", "1911510012");
 
-    public static void main(String[] args) throws Exception {
+        // method
+        mahasiswa.show();
+        mahasiswa.setNama("Firman");
+        mahasiswa.show();
 
+        System.out.println(mahasiswa.getNama());
+        System.out.println(mahasiswa.getNIM());
 
-        Mahasiswa mahasiswa1 = new Mahasiswa("Fara", "1911510012", "Teknik");
-        Mahasiswa mahasiswa2 = new Mahasiswa("Firman", "1911510012", "Teknik");
-    
-        // Polos objectPolos = new Polos();
-        // objectPolos.dataString = "Data";
-        // objectPolos.dataInt = 12;
-
-        // System.out.println(objectPolos.dataString);
-        // System.out.println(objectPolos.dataInt);
+        System.out.println(mahasiswa.sayHi("Halooo"));
     }
-
 }

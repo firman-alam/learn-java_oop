@@ -1,55 +1,119 @@
 package com.tutorial;
 
-class Mahasiswa {
+// player
+class Player {
+    String name;
+    double health;
+    int level; 
 
-    // Data member
-    String nama;
-    String nim;
-    
-    // constructor 
-    Mahasiswa(String nama, String nim) { // => ini punya scope void main
-        this.nama = nama;   // this.nama artinya ini punyanya class mahasiswa
-        this.nim = nim;     // this.nim artinya ini punya class mahasiswa
+    // object member
+    Weapon weapon;
+    Armor armor;
+
+    Player(String name, double health) {
+        this.name = name;
+        this.health = health;
     }
 
-    // method tanpa return dan tanpa parameter
-    void show() {
-        System.out.println("Nama: " + this.nama + " " + "NIM: " + this.nim);
+    void attack(Player opponent) {
+        double attackPower = this.weapon.attackPower;
+        System.out.println(this.name + " attacking " + opponent.name + " with power " + attackPower); 
+        opponent.defense(attackPower);
     }
 
-    // method tanpa return dan dengan parameter
-    void setNama(String nama) {
-        this.nama = nama;
+    void defense(double attackPower) {
+        // akan mengambil damage
+        double damage;
+        if (this.armor.defencePower < attackPower) {
+            damage = attackPower - this.armor.defencePower;
+        } else {
+            damage = 0;
+        }
+
+        this.health -= damage;
+        System.out.println(this.name + " get damage " + damage);
     }
 
-    // method dengan return tapi tidak dengan parameter
-    String getNama() {
-        return this.nama;
+    void equipWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
-    String getNIM() {
-        return this.nim;
+    void equipArmor(Armor armor) {
+        this.armor = armor;
     }
 
-    // method dengan return dan dengan parameter
-    String sayHi(String message) {
-        return message + " juga, nama saya adalah " + this.nama;
+    void display() {
+        System.out.println("\nName: " + this.name);
+        System.out.println("Health: " + this.health + " HP");
+        System.out.println("Level: " + this.level);
+        this.weapon.display();
+        this.armor.display();
+    }
+}
+
+// senjata 
+class Weapon {
+    double attackPower;
+    String name;
+
+    Weapon(String name, double attackPower) {
+        this.name = name;
+        this.attackPower = attackPower;
     }
 
+    void display() {
+        System.out.println("Weapon: " + this.name + ", power: " + this.attackPower);
+    }
+}
+
+// armor
+class Armor {
+    double defencePower;
+    String name;
+
+    Armor(String name, double defencePower) {
+        this.name = name;
+        this.defencePower = defencePower;
+    }
+
+    void display() {
+        System.out.println("Armor: " + this.name + ", power: " + this.defencePower);
+    }
 }
 
 public class Main {
+
     public static void main(String[] args) {
-        Mahasiswa mahasiswa = new Mahasiswa("Fara", "1911510012");
+        
+        // create object player
+        Player player1 = new Player("Firman", 100);
+        Player player2 = new Player("Fara", 100);
 
-        // method
-        mahasiswa.show();
-        mahasiswa.setNama("Firman");
-        mahasiswa.show();
+        // create object weapon
+        Weapon sword = new Weapon("Excalibur",50);
+        Weapon spear = new Weapon("Gungnir", 55);
 
-        System.out.println(mahasiswa.getNama());
-        System.out.println(mahasiswa.getNIM());
+        // create object armor
+        Armor shield = new Armor("Medusa",45);
+        Armor armor = new Armor("Titanium", 40);
 
-        System.out.println(mahasiswa.sayHi("Halooo"));
+        // player 1
+        player1.equipWeapon(sword);
+        player1.equipArmor(shield);
+        player1.display();
+
+        // player 2
+        player2.equipWeapon(spear);
+        player2.equipArmor(armor);
+        player2.display();
+
+        System.out.println("\nBattle");
+        System.out.println("\nEpisode - 1\n");
+        player1.attack(player2);
+        player2.display();
+        System.out.println("\nEpisode - 2\n");
+        player2.attack(player1);
+        player1.display();
+
     }
 }
